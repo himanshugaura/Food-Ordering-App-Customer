@@ -1,4 +1,6 @@
 "use client";
+import Navbar from "@/components/common/Navbar";
+import Image from "next/image";
 import React from "react";
 
 export default function Home() {
@@ -25,30 +27,30 @@ export default function Home() {
 
   return (
     <div className="min-h-screen md:h-screen w-full p-2 md:p-4">
-      <div className="flex flex-col md:flex-col lg:flex-row gap-4 rounded-3xl overflow-hidden h-full">
+      <div className="flex flex-col md:flex-col lg:flex-row gap-4 rounded-3xl overflow-hidden h-full relative">
         {/* Hero Section */}
-        <div className="flex-1 rounded-3xl relative flex items-end md:items-center justify-start bg-black overflow-hidden min-h-[50vh] h-[100vh] shadow-2xl animate-fade-in duration-700">
+        <div className="flex-1 relative flex items-end md:items-end justify-start overflow-hidden min-h-[70vh] md:min-h-[50vh] h-[100vh] shadow-2xl animate-fade-in duration-700">
+          <div className="absolute top-6 left-1/2 -translate-x-1/2 z-20 md:hidden">
+            <Navbar />
+          </div>
+          <div className="hidden md:block absolute top-10 left-10 z-20">
+            <Navbar />
+          </div>
           <video 
-            className="w-full h-full object-cover absolute inset-0 opacity-90" 
-            autoPlay 
-            loop 
-            muted 
+            className="w-full rounded-3xl h-full object-cover absolute inset-0 opacity-90" 
+            autoPlay
+            muted
             playsInline
+            loop
           >
             <source src="/hero.mp4" type="video/mp4" />
           </video>
-          
-          {/* Gradient overlay for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent md:bg-gradient-to-r md:from-black/60 md:via-black/30 md:to-transparent"></div>
-          
+
           <div className="relative z-10 p-8 md:p-16 animate-fade-in">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif text-[#ede7d3] drop-shadow-2xl tracking-wide leading-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-8xl font-bold text-white drop-shadow-2xl tracking-wide leading-tight">
               FOOD <br />
               SENSATION
             </h1>
-            <p className="text-[#ede7d3]/80 mt-4 text-sm md:text-base font-light tracking-wider hidden md:block">
-              Lorem ipsum dolor sit amet.
-            </p>
           </div>
         </div>
 
@@ -57,16 +59,18 @@ export default function Home() {
           {sidebarItems.map((item, index) => (
             <div
               key={index}
-              className="rounded-2xl overflow-hidden relative group cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-fade-slide-in"
+              className="rounded-2xl overflow-hidden relative group cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-fade-slide-in sidebar-item"
               style={{ 
                 animationDelay: item.delay,
                 opacity: 0,
                 animationFillMode: 'forwards'
               }}
             >
-              <img
+              <Image
                 src={item.src}
                 alt={item.alt}
+                width={200}
+                height={200}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 brightness-90 group-hover:brightness-100"
               />
               
@@ -85,7 +89,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Animations */}
+      {/* Animations and Responsive Height */}
       <style jsx>{`
         @keyframes fadeIn {
           from {
@@ -118,21 +122,17 @@ export default function Home() {
         }
 
         @media (max-width: 768px) {
-          .animate-fade-slide-in {
-            animation: fadeIn 0.8s ease-out;
-          }
-          
-          .flex-col.md\\:flex-row {
-            flex-direction: column !important;
-          }
-          .md\\:max-w-[340px] {
-            max-width: 100% !important;
-          }
-          .md\\:w-[30%] {
-            width: 100% !important;
-          }
+          /* Increase hero section height */
           .flex-1 {
-            min-height: 50vh !important;
+            min-height: 70vh !important;
+            height: auto !important;
+          }
+
+          /* Decrease sidebar item height */
+          .sidebar-item {
+            min-height: 30vh;
+            max-height: 30vh;
+            height: 28vw;
           }
         }
 
