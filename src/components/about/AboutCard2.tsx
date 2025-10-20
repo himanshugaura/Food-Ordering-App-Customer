@@ -3,7 +3,7 @@ import React from 'react';
 
 const AboutCard2 = () => {
   return (
-    <div className="flex flex-col justify-center  lg:flex-row-reverse bg-zinc-950 rounded-3xl overflow-hidden max-w-7xl mx-auto min-h-[400px] gap-2">
+    <div className="flex flex-col justify-center  lg:flex-row-reverse  rounded-3xl overflow-hidden max-w-7xl mx-auto min-h-[400px] gap-2">
       {/* Content Section */}
       <div className="flex-1 px-10 py-5 sm:p-10 flex flex-col justify-center items-center border border-zinc-700 rounded-3xl">
         <h1 className="font-serif text-3xl sm:text-4xl lg:text-4xl font-light text-white mb-8 lg:mb-12 leading-tight tracking-[0.15em] uppercase text-center md:text-left">
