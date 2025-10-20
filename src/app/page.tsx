@@ -1,6 +1,8 @@
 "use client";
 import Navbar from "@/components/common/Navbar";
+import { SparklesText } from "@/components/ui/sparkles-text";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export default function Home() {
@@ -9,31 +11,36 @@ export default function Home() {
       src: "/menu.avif",
       alt: "menu",
       label: "MENU",
+      link: "/Menu",
       delay: "0ms"
     },
     {
       src: "/contact.avif",
       alt: "reservation",
       label: "CONTACT",
+      link: "/contact",
       delay: "150ms"
     },
     {
       src: "/about.avif",
       alt: "our space",
       label: "OUR SPACE",
+      link: "/about",
       delay: "300ms"
     }
   ];
+
+  const router = useRouter();
 
   return (
     <div className="min-h-screen md:h-screen w-full p-2 md:p-4">
       <div className="flex flex-col md:flex-col lg:flex-row gap-4 rounded-3xl overflow-hidden h-full relative">
         {/* Hero Section */}
         <div className="flex-1 relative flex items-end md:items-end justify-start overflow-hidden min-h-[70vh] md:min-h-[50vh] h-[100vh] shadow-2xl animate-fade-in duration-700">
-          <div className="absolute top-6 left-1/2 -translate-x-1/2 z-20 md:hidden">
+          {/* <div className="absolute top-6 left-1/2 -translate-x-1/2 z-20 md:hidden">
             <Navbar />
-          </div>
-          <div className="hidden md:block absolute top-10 left-10 z-20">
+          </div> */}
+          <div className=" absolute top-10 left-10 z-20">
             <Navbar />
           </div>
           <video 
@@ -47,10 +54,10 @@ export default function Home() {
           </video>
 
           <div className="relative z-10 p-8 md:p-16 animate-fade-in">
-            <h1 className="text-5xl md:text-6xl lg:text-8xl font-bold text-white drop-shadow-2xl tracking-wide leading-tight">
+            <SparklesText className="text-5xl md:text-6xl lg:text-8xl font-bold text-white drop-shadow-2xl tracking-wide leading-tight">
               FOOD <br />
               SENSATION
-            </h1>
+            </SparklesText>
           </div>
         </div>
 
@@ -65,12 +72,14 @@ export default function Home() {
                 opacity: 0,
                 animationFillMode: 'forwards'
               }}
+              onClick={ () => router.push(item.link)}
             >
               <Image
                 src={item.src}
                 alt={item.alt}
-                width={200}
-                height={200}
+                width={1920}
+                height={1080}
+                quality={100}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 brightness-90 group-hover:brightness-100"
               />
               
