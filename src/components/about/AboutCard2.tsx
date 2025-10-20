@@ -17,7 +17,7 @@ const AboutCard2 = () => {
       {/* Image Section */}
       <div className="flex-1 relative min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]">
         <Image
-          src="/contact.avif"
+          src="/aboutSec.avif"
           alt="Elegant dining experience"
           className="w-full h-full object-cover rounded-3xl"
           width={1920}
