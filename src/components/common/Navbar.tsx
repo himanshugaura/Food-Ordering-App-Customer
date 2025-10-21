@@ -28,7 +28,7 @@ const Navbar = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="relative">
@@ -92,19 +92,25 @@ const Navbar = () => {
             <p className="hover:text-gray-300 transition-colors">CONTACT</p>
           </Link>
           <Link href={"/cart"} onClick={() => setIsMenuOpen(false)}>
-              <p className="hover:text-gray-300 transition-colors"><ShoppingCart /></p>
-            </Link>
+            <p className="hover:text-gray-300 transition-colors">
+              <ShoppingCart />
+            </p>
+          </Link>
           <Link href={"/profile"}>
-          <div className="bg-white rounded-full flex items-center justify-center">
-            <Image
-              src={user?.avatar!}
-              alt="user-avatar"
-              width={1920}  
-              height={1080}
-              quality={100}
-              className="object-cover w-10 h-10 rounded-full"
-              />
-          </div>
+            <div className="bg-white rounded-full flex items-center justify-center">
+              {user?.avatar ? (
+                <Image
+                  src={user.avatar}
+                  alt="user-avatar"
+                  width={1920}
+                  height={1080}
+                  quality={100}
+                  className="object-cover w-10 h-10 rounded-full"
+                />
+              ) : (
+                <div className="object-cover w-10 h-10 rounded-full bg-gray-300" />
+              )}
+            </div>
           </Link>
         </div>
       </div>
@@ -123,19 +129,25 @@ const Navbar = () => {
               <p className="hover:text-gray-300 transition-colors">CONTACT</p>
             </Link>
             <Link href={"/cart"} onClick={() => setIsMenuOpen(false)}>
-              <p className="hover:text-gray-300 transition-colors"><ShoppingCart /></p>
+              <p className="hover:text-gray-300 transition-colors">
+                <ShoppingCart />
+              </p>
             </Link>
             <Link href={"/profile"}>
-            <div className="bg-white rounded-full flex items-center justify-center">
-              <Image
-                src={user?.avatar!}
-                alt="user-avatar"
-                width={1920}
-                height={1080}
-                quality={100}
-                className="object-cover w-10 h-10 rounded-full"
-                />
-            </div>
+              <div className="bg-white rounded-full flex items-center justify-center">
+                {user?.avatar ? (
+                  <Image
+                    src={user.avatar}
+                    alt="user-avatar"
+                    width={1920}
+                    height={1080}
+                    quality={100}
+                    className="object-cover w-10 h-10 rounded-full"
+                  />
+                ) : (
+                  <div className="object-cover w-10 h-10 rounded-full bg-gray-300" />
+                )}
+              </div>
             </Link>
           </div>
         </div>

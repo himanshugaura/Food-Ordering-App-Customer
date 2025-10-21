@@ -4,9 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Leaf, IndianRupee, Beef, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { FoodType } from "@/constants/typeConstants";
-import { useRouter } from "next/navigation";
 import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
 import Image from "next/image";
 
 interface ProductCardProps {

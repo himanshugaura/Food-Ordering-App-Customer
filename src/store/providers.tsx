@@ -2,7 +2,6 @@
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
 import { Toaster } from "react-hot-toast";
-import AuthGuard from "@/components/common/AuthGaurd";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (

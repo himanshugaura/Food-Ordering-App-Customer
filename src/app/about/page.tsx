@@ -1,6 +1,5 @@
 "use client";
 import AboutCard1 from "@/components/about/AboutCard1";
-import AboutCard from "@/components/about/AboutCard1";
 import AboutCard2 from "@/components/about/AboutCard2";
 import Ratings from "@/components/about/Ratings";
 import Navbar from "@/components/common/Navbar";

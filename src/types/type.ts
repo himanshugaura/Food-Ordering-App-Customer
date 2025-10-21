@@ -40,7 +40,7 @@ export interface Product  {
   name: string;
   description: string;
   foodType: FoodType;
-  isAvailable: Boolean;
+  isAvailable: boolean;
   price: number;
   category: Category;
   image: {

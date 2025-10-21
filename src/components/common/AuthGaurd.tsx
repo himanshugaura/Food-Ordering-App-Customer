@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAppDispatch } from "@/store/hook";
 import { fetchProfile } from "@/api/auth";
@@ -15,7 +15,8 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const user = useSelector((state: RootState) => state.auth.user);
 
   const [loading, setLoading] = useState(!user);
-  const publicRoutes = ["/login", "/register"];
+  // Wrap publicRoutes in useMemo for stable reference
+  const publicRoutes = useMemo(() => ["/login", "/register"], []);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -42,7 +43,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     };
 
     checkAuth();
-  }, [user, pathname, router, dispatch]);
+  }, [user, pathname, router, publicRoutes, dispatch]);
 
   if (loading) return <Loader />;
 

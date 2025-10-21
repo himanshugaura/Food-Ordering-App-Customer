@@ -1,7 +1,7 @@
 import { fetchAllCategories, fetchProductsByCategory } from "@/api/product";
 import { useAppDispatch } from "@/store/hook";
 import type { RootState } from "@/store/store";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useSelector } from "react-redux";
 import ProductCard from "./ProductCard";
 import FoodCategories from "./FoodCategories";
@@ -9,7 +9,12 @@ import FoodCategories from "./FoodCategories";
 const Products = () => {
   const dispatch = useAppDispatch();
   const products = useSelector((state: RootState) => state.product.products) || [];
-  const categories = useSelector((state: RootState) => state.product.categories) || [];
+
+  const rawCategories = useSelector((state: RootState) => state.product.categories);
+  const categories = useMemo(
+    () => rawCategories || [],
+    [rawCategories]
+  );
   const [queryCategory, setQueryCategory] = useState<string | undefined>(undefined);
 
   // Fetch categories on mount

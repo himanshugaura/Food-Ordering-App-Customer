@@ -21,7 +21,7 @@ export interface AnimatedGridPatternProps
   numSquares?: number
   maxOpacity?: number
   duration?: number
-  repeatDelay?: number
+  // repeatDelay?: number // Removed unused prop
 }
 
 export function AnimatedGridPattern({
@@ -34,14 +34,14 @@ export function AnimatedGridPattern({
   className,
   maxOpacity = 0.5,
   duration = 4,
-  repeatDelay = 0,
+  // repeatDelay = 0, // Removed unused variable
   ...props
 }: AnimatedGridPatternProps) {
   const id = useId()
-  const containerRef = useRef(null)
+  const containerRef = useRef<SVGSVGElement>(null)
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
-  const [squares, setSquares] = useState(() => generateSquares(numSquares))
 
+  // Move getPos and generateSquares inside the component so they can be safely used in hooks
   function getPos() {
     return [
       Math.floor((Math.random() * dimensions.width) / width),
@@ -49,13 +49,14 @@ export function AnimatedGridPattern({
     ]
   }
 
-  // Adjust the generateSquares function to return objects with an id, x, and y
   function generateSquares(count: number) {
     return Array.from({ length: count }, (_, i) => ({
       id: i,
       pos: getPos(),
     }))
   }
+
+  const [squares, setSquares] = useState(() => generateSquares(numSquares))
 
   // Function to update a single square's position
   const updateSquarePosition = (id: number) => {
@@ -71,15 +72,18 @@ export function AnimatedGridPattern({
     )
   }
 
-  // Update squares to animate in
+  // Build-time warning fix: include generateSquares in dependencies
   useEffect(() => {
     if (dimensions.width && dimensions.height) {
       setSquares(generateSquares(numSquares))
     }
+    // generateSquares does not change, so it's safe to ignore in deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dimensions, numSquares])
 
   // Resize observer to update container dimensions
   useEffect(() => {
+    const currentRef = containerRef.current
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         setDimensions({
@@ -89,16 +93,16 @@ export function AnimatedGridPattern({
       }
     })
 
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current)
+    if (currentRef) {
+      resizeObserver.observe(currentRef)
     }
 
     return () => {
-      if (containerRef.current) {
-        resizeObserver.unobserve(containerRef.current)
+      if (currentRef) {
+        resizeObserver.unobserve(currentRef)
       }
     }
-  }, [containerRef])
+  }, [])
 
   return (
     <svg

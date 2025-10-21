@@ -1,6 +1,7 @@
 import React from "react";
 import { Category } from "@/types/type";
 import { SparklesText } from "../ui/sparkles-text";
+import Image from "next/image";
 
 interface FoodCategoriesProps {
   categories: Category[];
@@ -51,7 +52,10 @@ const FoodCategories: React.FC<FoodCategoriesProps> = ({
                   : "ring-[2px] ring-gray-200/80 group-hover:ring-orange-400 group-hover:ring-offset-2 group-hover:shadow-lg group-hover:shadow-orange-400/20"
               }`}
             >
-              <img
+              <Image
+              quality={100}
+                width={1920}
+                height={1080}
                 src={category.image.url}
                 alt={category.name}
                 className={`w-full h-full object-cover transition-all duration-500 ${

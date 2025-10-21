@@ -81,7 +81,6 @@ const RegisterPage = () => {
         numSquares={50}
         opacity={0.35}
         duration={2}
-        repeatDelay={0.5}
         className={cn(
           "[mask-image:radial-gradient(100vw_circle_at_center,white,transparent)]",
           "md:[mask-image:radial-gradient(100vw_circle_at_center,white,transparent)]",
