@@ -14,6 +14,7 @@ export const StoreEndpoints = {
 export const ProductEndpoints = {
     GET_ALL_PRODUCTS: `${BASE_URL}/menu/get-products`,
     GET_PRODUCT_BY_ID: (id: string) => `${BASE_URL}/menu/get-product/${id}`,
+    GET_PRODUCTS_BY_IDS: `${BASE_URL}/menu/get-products-by-ids`,
 }
 
 export const CategoryEndpoints = {

@@ -19,31 +19,33 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const publicRoutes = useMemo(() => ["/login", "/register" , "/" , "/menu" , "/contact" , "/about" , "/cart"], []);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      if (user) return setLoading(false);
+  const checkAuth = async () => {
+    if (user) return setLoading(false);
 
-      try {
-        const loggedIn = await dispatch(fetchProfile());
+    try {
+      const loggedIn = await dispatch(fetchProfile());
 
-        // Only redirect if not on a public route
-        if (loggedIn && publicRoutes.includes(pathname)) {
-          router.replace("/");
-        }
-
-        if (!loggedIn && !publicRoutes.includes(pathname)) {
-          router.replace("/login");
-        }
-      } catch {
-        if (!publicRoutes.includes(pathname)) {
-          router.replace("/login");
-        }
-      } finally {
-        setLoading(false);
+      if (!loggedIn && !publicRoutes.includes(pathname)) {
+        // Not logged in and trying to access private route
+        router.replace("/login");
       }
-    };
 
-    checkAuth();
-  }, [user, pathname, router, publicRoutes, dispatch]);
+      if (loggedIn && ["/login", "/register"].includes(pathname)) {
+        // Logged in but on login/register page → redirect to home
+        router.replace("/");
+      } 
+    } catch {
+      if (!publicRoutes.includes(pathname)) {
+        router.replace("/login");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  checkAuth();
+}, [user, pathname, router, dispatch]);
+
 
   if (loading) return <Loader />;
 

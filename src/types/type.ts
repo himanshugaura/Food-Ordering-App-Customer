@@ -50,3 +50,8 @@ export interface Product  {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface CartItem {
+  product: Product;
+  quantity: number;
+}
