@@ -27,7 +27,7 @@ export const getProductsByCart =
       const cart = await dispatch(fetchCart());
       if (!cart || cart.length === 0) return false;
 
-      const productIds = cart.map((item: any) => item.productId);
+      const productIds = cart.map((item) => item.productId);
 
       const res = await apiConnector(
         "POST",
@@ -39,7 +39,7 @@ export const getProductsByCart =
         const products: Product[] = res.data as Product[];
 
         const cartItems: CartItem[] = products.map((product) => {
-          const lsItem = cart.find((c: any) => c.productId === product._id);
+          const lsItem = cart.find((c) => c.productId === product._id);
           return {
             product,
             quantity: lsItem?.quantity || 1,

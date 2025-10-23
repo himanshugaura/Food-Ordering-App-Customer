@@ -44,7 +44,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   };
 
   checkAuth();
-}, [user, pathname, router, dispatch]);
+}, [user, pathname, router, dispatch , publicRoutes]);
 
 
   if (loading) return <Loader />;

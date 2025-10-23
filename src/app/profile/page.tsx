@@ -2,6 +2,7 @@
 
 import { logout } from "@/api/auth"
 import { useAppDispatch } from "@/store/hook"
+import { RootState } from "@/store/store"
 import { User, Package, LogOut, ChevronDown, Leaf, Drumstick } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
@@ -9,7 +10,7 @@ import { useState } from "react"
 import { useSelector } from "react-redux"
 
 const Profile = () => {
-    const user = useSelector((state: any) => state.auth.user);
+    const user = useSelector((state: RootState) => state.auth.user);
   const [activeTab, setActiveTab] = useState<"current" | "previous">("current")
   const [selectedMonth, setSelectedMonth] = useState("all")
     const dispatch = useAppDispatch();
@@ -288,7 +289,7 @@ const Profile = () => {
         </div>
 
         <div className="text-center mt-6">
-          <p className="text-zinc-600 text-sm">Member since {user?.createdAt.split("T")[0]}</p>
+          <p className="text-zinc-600 text-sm">Member since {user?.createdAt.toString().split("T")[0]}</p>
         </div>
       </div>
     </div>

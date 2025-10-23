@@ -3,6 +3,7 @@ import React from "react";
 import { Leaf, Beef, Plus, Minus, Trash2 } from "lucide-react";
 import { useAppDispatch } from "@/store/hook";
 import { decreaseQuantity, increaseQuantity, removeCartItem } from "@/store/features/cart.slice";
+import Image from "next/image";
 
 interface CartCardProps {
   item: CartItem;
@@ -31,7 +32,10 @@ const handleQuantityDecrement = () => {
         {/* Product Image */}
         <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-xl bg-zinc-800/50 flex items-center justify-center flex-shrink-0 overflow-hidden ring-1 ring-zinc-800/50">
           {product.image?.url ? (
-            <img
+            <Image
+            width={1920}
+            height={1080}
+            quality={100}
               src={product.image.url}
               alt={product.name}
               className="w-full h-full object-cover"
