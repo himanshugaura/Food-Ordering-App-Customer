@@ -1,5 +1,6 @@
 import type { CartItem, Product } from "@/types/type";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 interface CartState {
   CartItems: CartItem[];
@@ -31,6 +32,7 @@ const cartSlice = createSlice({
         quantity: item.quantity,
       }));
       localStorage.setItem("cart", JSON.stringify(lsData));
+      toast.success("Added to cart");
     },
 
     increaseQuantity(state, action: PayloadAction<string>) {
