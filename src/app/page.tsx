@@ -11,7 +11,7 @@ export default function Home() {
       src: "/menu.avif",
       alt: "menu",
       label: "MENU",
-      link: "/Menu",
+      link: "/menu",
       delay: "0ms"
     },
     {

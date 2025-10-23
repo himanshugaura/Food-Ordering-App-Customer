@@ -6,7 +6,7 @@ import { Spicy_Rice } from "next/font/google";
 import Link from "next/link";
 import { useAppDispatch } from "@/store/hook";
 import { fetchProfile } from "@/api/auth";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, User } from "lucide-react";
 
 const spicy_rice = Spicy_Rice({
   subsets: ["latin"],
@@ -97,7 +97,7 @@ const Navbar = () => {
             </p>
           </Link>
           <Link href={"/profile"}>
-            <div className="bg-white rounded-full flex items-center justify-center">
+            <div className="bg-white rounded-full flex items-center justify-center w-10 h-10 overflow-hidden">
               {user?.avatar ? (
                 <Image
                   src={user.avatar}
@@ -108,7 +108,7 @@ const Navbar = () => {
                   className="object-cover w-10 h-10 rounded-full"
                 />
               ) : (
-                <div className="object-cover w-10 h-10 rounded-full bg-gray-300" />
+                <User className="w-5 h-5 text-gray-700" />
               )}
             </div>
           </Link>
@@ -133,8 +133,8 @@ const Navbar = () => {
                 <ShoppingCart />
               </p>
             </Link>
-            <Link href={"/profile"}>
-              <div className="bg-white rounded-full flex items-center justify-center">
+            <Link href={"/profile"} onClick={() => setIsMenuOpen(false)}>
+              <div className="bg-white rounded-full flex items-center justify-center w-10 h-10 overflow-hidden">
                 {user?.avatar ? (
                   <Image
                     src={user.avatar}
@@ -145,7 +145,7 @@ const Navbar = () => {
                     className="object-cover w-10 h-10 rounded-full"
                   />
                 ) : (
-                  <div className="object-cover w-10 h-10 rounded-full bg-gray-300" />
+                  <User className="w-5 h-5 text-gray-700" />
                 )}
               </div>
             </Link>

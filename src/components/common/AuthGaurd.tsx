@@ -16,7 +16,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
   const [loading, setLoading] = useState(!user);
   // Wrap publicRoutes in useMemo for stable reference
-  const publicRoutes = useMemo(() => ["/login", "/register"], []);
+  const publicRoutes = useMemo(() => ["/login", "/register" , "/" , "/menu" , "/contact" , "/about" , "/cart"], []);
 
   useEffect(() => {
     const checkAuth = async () => {
