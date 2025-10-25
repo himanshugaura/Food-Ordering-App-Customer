@@ -21,3 +21,13 @@ export const CategoryEndpoints = {
     GET_ALL_CATEGORIES: `${BASE_URL}/menu/get-categories`,
     GET_PRODUCT_BY_CATEGORY: (id : string) => `${BASE_URL}/menu/get-products-by-category/${id}`,
 }
+
+export const OrderEndpoints = {
+    PLACE_CASH_ORDER: `${BASE_URL}/order/place/cash`,
+    PLACE_ONLINE_ORDER: `${BASE_URL}/order/place/online`,
+}
+
+export const RazorpayEndpoints = {
+    VERIFY_PAYMENT: `${BASE_URL}/payment/verify`,
+    CANCEL_UNPAID_ORDER: `${BASE_URL}/order/cancel`,
+}

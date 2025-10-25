@@ -5,7 +5,8 @@ import AuthGuard from "@/components/common/AuthGaurd";
 
 export const metadata: Metadata = {
   title: "Foody",
-   description: "Order delicious food with ease directly from your table at Foody. Browse our menu, customize your meal, and enjoy a seamless dining experience with our in-restaurant ordering app.",
+  description:
+    "Order delicious food with ease directly from your table at Foody. Browse our menu, customize your meal, and enjoy a seamless dining experience with our in-restaurant ordering app.",
   keywords: [
     "Foody",
     "restaurant",
@@ -16,11 +17,12 @@ export const metadata: Metadata = {
     "order food online",
     "restaurant technology",
     "contactless dining",
-    "Foody menu"
+    "Foody menu",
   ],
 };
 
 import { Abel } from "next/font/google";
+import Script from "next/script";
 
 const abel = Abel({
   subsets: ["latin"],
@@ -34,10 +36,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={abel.className}
-      >
-        <Providers><AuthGuard>{children}</AuthGuard></Providers>
+      <body className={abel.className}>
+        <Script
+        src="https://checkout.razorpay.com/v1/checkout.js"
+        strategy="beforeInteractive"
+      />
+        <Providers>
+          <AuthGuard>{children}</AuthGuard>
+        </Providers>
       </body>
     </html>
   );

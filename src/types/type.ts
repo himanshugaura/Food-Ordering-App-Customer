@@ -1,4 +1,10 @@
-import { FoodType } from "@/constants/typeConstants";
+import { FoodType, OrderStatus, PaymentMethod } from "@/constants/typeConstants";
+
+declare global {
+  interface Window {
+    Razorpay: new (options: any) => { open: () => void };
+  }
+}
 
 export interface User {
   _id: string;
@@ -54,4 +60,25 @@ export interface Product  {
 export interface CartItem {
   product: Product;
   quantity: number;
+}
+
+
+export interface OrderItem {
+  product: string;   
+  quantity: number;          
+}
+
+export interface Orders  {
+  _id: string;
+  user: string;
+  orderItems: OrderItem[];  
+  orderNo: number;
+  totalAmount: number;
+  status: OrderStatus;
+  paymentMethod : PaymentMethod;
+  isPaid : Boolean;
+  razorpayOrderId?: string;
+  razorpayPaymentId?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
