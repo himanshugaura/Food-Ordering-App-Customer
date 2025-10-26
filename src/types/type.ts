@@ -1,8 +1,9 @@
 import { FoodType, OrderStatus, PaymentMethod } from "@/constants/typeConstants";
 
+
 declare global {
   interface Window {
-    Razorpay: new (options: any) => { open: () => void };
+    Razorpay?: new (options: RazorpayOptions) => RazorpayInstance;
   }
 }
 
@@ -76,9 +77,43 @@ export interface Orders  {
   totalAmount: number;
   status: OrderStatus;
   paymentMethod : PaymentMethod;
-  isPaid : Boolean;
+  isPaid : boolean;
   razorpayOrderId?: string;
   razorpayPaymentId?: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface RazorpayOptions {
+  key: string;
+  amount: number;
+  currency: string;
+  name: string;
+  description: string;
+  order_id: string;
+  method: {
+    upi: boolean;
+    card: boolean;
+    netbanking: boolean;
+    wallet: boolean;
+  };
+  handler: (paymentResponse: PaymentResponse) => void | Promise<void>;
+  modal: {
+    ondismiss: () => void | Promise<void>;
+  };
+}
+
+export interface RazorpayInstance {
+  open: () => void;
+}
+
+export interface PaymentResponse {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
+}
+
+export interface OnlineOrderResponse {
+  totalAmount: number;
+  razorpayOrderId: string;
 }
