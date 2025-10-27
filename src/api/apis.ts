@@ -1,4 +1,4 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL + "/api";
 
 export const AuthEndpoints = {
     LOGIN: `${BASE_URL}/user/auth/login`,
