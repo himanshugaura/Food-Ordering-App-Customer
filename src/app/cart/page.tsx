@@ -9,9 +9,10 @@ import { ShoppingBag, ArrowRight, Package, Banknote, CreditCard, Loader2 } from 
 import { SparklesText } from "@/components/ui/sparkles-text";
 import { PaymentMethod } from "@/constants/typeConstants";
 import { createCashOrder, createOnlineOrder, openPaymentPopup } from "@/api/order";
-import { OrderItem } from "@/types/type";
+import { CartItem, OrderItem } from "@/types/type";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+
 
 const Cart = () => {
   const cartItems = useSelector((state: RootState) => state.cart.CartItems);
@@ -38,7 +39,7 @@ const Cart = () => {
     return { subtotal, itemCount };
   }, [cartItems]);
 
-  const orderItems: OrderItem[] = cartItems.map((item) => ({
+  const orderItems : CartItem[] = cartItems.map((item) => ({
     product: item.product._id,
     quantity: item.quantity,
   }));

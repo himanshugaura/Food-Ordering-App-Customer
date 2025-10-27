@@ -1,11 +1,11 @@
 import { apiConnector } from "@/utils/apiConnector";
 import toast from "react-hot-toast";
 import { OrderEndpoints, RazorpayEndpoints } from "./apis";
-import { OnlineOrderResponse, OrderItem, Orders, PaymentResponse, RazorpayInstance, RazorpayOptions } from "@/types/type";
+import { CartItem, OnlineOrderResponse, OrderItem, Orders, PaymentResponse, RazorpayInstance, RazorpayOptions } from "@/types/type";
 import { AppDispatch } from "@/store/store";
 import { setOrders, setPendingOrders } from "@/store/features/orders.slice";
 // Cash order
-export const createCashOrder = (orderItems: OrderItem[]) => async (): Promise<boolean> => {
+export const createCashOrder = (orderItems: CartItem[]) => async (): Promise<boolean> => {
   try {
     const res = await apiConnector("POST", OrderEndpoints.PLACE_CASH_ORDER, { orderItems });
     if (res.success) {
@@ -23,7 +23,7 @@ export const createCashOrder = (orderItems: OrderItem[]) => async (): Promise<bo
 };
 
 // Online order
-export const createOnlineOrder = (orderItems: OrderItem[]) => async (): Promise<OnlineOrderResponse | null> => {
+export const createOnlineOrder = (orderItems: CartItem[]) => async (): Promise<OnlineOrderResponse | null> => {
   try {
     const res = await apiConnector("POST", OrderEndpoints.PLACE_ONLINE_ORDER, { orderItems });
     if (res.success && res.data) {

@@ -1,4 +1,4 @@
-import { CartItem } from "@/types/type";
+import { CartItem, OrderItem } from "@/types/type";
 import React from "react";
 import { Leaf, Beef, Plus, Minus, Trash2 } from "lucide-react";
 import { useAppDispatch } from "@/store/hook";
@@ -6,7 +6,7 @@ import { decreaseQuantity, increaseQuantity, removeCartItem } from "@/store/feat
 import Image from "next/image";
 
 interface CartCardProps {
-  item: CartItem;
+  item: OrderItem;
 }
 
 const CartCard: React.FC<CartCardProps> = ({ item }) => {

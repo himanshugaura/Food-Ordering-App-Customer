@@ -1,9 +1,9 @@
-import type { CartItem, Product } from "@/types/type";
+import type { OrderItem, Product } from "@/types/type";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
 interface CartState {
-  CartItems: CartItem[];
+  CartItems: OrderItem[];
 }
 
 const initialState: CartState = {
@@ -74,7 +74,7 @@ const cartSlice = createSlice({
       localStorage.setItem("cart", JSON.stringify(lsData));
     },
 
-    setCart(state, action: PayloadAction<CartItem[]>) {
+    setCart(state, action: PayloadAction<OrderItem[]>) {
       state.CartItems = action.payload;
     },
   },

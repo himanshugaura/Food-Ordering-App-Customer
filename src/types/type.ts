@@ -59,13 +59,13 @@ export interface Product  {
 }
 
 export interface CartItem {
-  product: Product;
+  product: string;
   quantity: number;
 }
 
 
 export interface OrderItem {
-  product: Product | string;   
+  product: Product;   
   quantity: number;          
 }
 

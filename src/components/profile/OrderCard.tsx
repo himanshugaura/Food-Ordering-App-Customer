@@ -1,4 +1,5 @@
 import { OrderStatus, FoodType } from "@/constants/typeConstants";
+import { Orders } from "@/types/type";
 import { Plus, Package, Leaf, Drumstick } from "lucide-react";
 import Image from "next/image";
 import React from "react";
@@ -36,7 +37,7 @@ const renderProductIcon = (foodType: string) =>
   );
 
 interface OrderCardProps {
-  order: any;
+  order: Orders;
   isExpanded: boolean;
   toggleOrderExpansion: (orderId: string) => void;
 }
@@ -67,7 +68,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, isExpanded, toggleOrderExp
       </div>
       {/* Order Items */}
       <div className="space-y-3">
-        {itemsToShow.map((item: any, index: number) => (
+        {itemsToShow.map((item, index: number) => (
           <div key={index} className="flex items-center justify-between py-2 border-b border-zinc-700 last:border-b-0">
             <div className="flex items-center gap-3 flex-1">
               <div className="w-12 h-12 rounded-lg bg-zinc-900 flex items-center justify-center flex-shrink-0">

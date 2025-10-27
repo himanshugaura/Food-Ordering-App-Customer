@@ -2,7 +2,7 @@ import { ProductEndpoints } from "./apis";
 import { apiConnector } from "@/utils/apiConnector";
 import { AppDispatch } from "@/store/store";
 import { setCart } from "@/store/features/cart.slice";
-import type { Product, CartItem } from "@/types/type";
+import type { Product, OrderItem } from "@/types/type";
 
 export const fetchCart =
   () =>
@@ -38,7 +38,7 @@ export const getProductsByCart =
       if (res.success && res.data) {
         const products: Product[] = res.data as Product[];
 
-        const cartItems: CartItem[] = products.map((product) => {
+        const cartItems: OrderItem[] = products.map((product) => {
           const lsItem = cart.find((c) => c.productId === product._id);
           return {
             product,

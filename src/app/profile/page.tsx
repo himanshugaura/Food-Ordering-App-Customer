@@ -51,7 +51,7 @@ const Profile = () => {
     if (!previousOrders || previousOrders.length === 0 || activeTab === "previous") {
       dispatch(getAllOrders(selectedMonth));
     }
-  }, [dispatch, selectedMonth, activeTab]);
+  }, [dispatch, selectedMonth, activeTab , previousOrders]);
 
   const filteredOrders = useMemo(() => {
     if (!previousOrders) return [];
