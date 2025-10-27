@@ -28,16 +28,9 @@
   const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     const dispatch = useAppDispatch();
     const [imageLoaded, setImageLoaded] = useState(false);
-
     const handleAddToCart = (e: React.MouseEvent) => {
       e.stopPropagation();
       dispatch(addToCart(product));
-    };
-
-    const handleBuyNow = (e: React.MouseEvent) => {
-      e.stopPropagation();
-      // Add your buy now logic here
-      console.log("Buy now:", product._id);
     };
 
     const getFoodTypeIcon = () => {
@@ -118,19 +111,13 @@
             <p className="text-gray-900 text-sm mb-2">{product.description}</p>
 
             {/* Action Buttons */}
-            <div className="flex gap-2 justify-between">
+            <div className="w-full">
               <button
-                className="flex gap-1 bg-amber-400 rounded-2xl px-5 py-3 text-white  justify-center items-center cursor-pointer"
+                className="flex gap-1 w-full bg-emerald-400 rounded-2xl px-5 py-3 text-white  justify-center items-center cursor-pointer hover:scale-105 active:scale-95 transition-transform duration-150 font-lg shadow-md shadow-emerald"
                 onClick={handleAddToCart}
               >
                 <ShoppingCart className="h-4 w-4 mr-1.5" />
                 Cart
-              </button>
-              <button
-                className="flex gap-1 bg-emerald-500 rounded-2xl px-5 py-3 text-white  justify-center items-center cursor-pointer"
-                onClick={handleBuyNow}
-              >
-                Buy Now
               </button>
             </div>
           </div>

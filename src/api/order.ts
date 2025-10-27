@@ -1,7 +1,9 @@
 import { apiConnector } from "@/utils/apiConnector";
 import toast from "react-hot-toast";
 import { OrderEndpoints, RazorpayEndpoints } from "./apis";
-import { OnlineOrderResponse, OrderItem, PaymentResponse, RazorpayInstance, RazorpayOptions } from "@/types/type";
+import { OnlineOrderResponse, OrderItem, Orders, PaymentResponse, RazorpayInstance, RazorpayOptions } from "@/types/type";
+import { AppDispatch } from "@/store/store";
+import { setOrders, setPendingOrders } from "@/store/features/orders.slice";
 // Cash order
 export const createCashOrder = (orderItems: OrderItem[]) => async (): Promise<boolean> => {
   try {
@@ -101,3 +103,37 @@ export const openPaymentPopup = async (
     toast.error("Razorpay SDK not loaded");
   }
 };
+
+export const getPendingOrders = () => async (dispatch : AppDispatch) : Promise<boolean> => {
+  try {
+    const res = await apiConnector("GET", OrderEndpoints.GET_PENDING_ORDERS);
+    if (res.success && res.data) {
+      dispatch(setPendingOrders(res.data as Orders[]));
+      return true;
+    } else {
+      toast.error(res.message || "Failed to fetch pending orders");
+      return false;
+    }
+  } catch (error) {
+    console.error("Get pending orders error:", error);
+    toast.error("Unable to fetch pending orders");
+    return false;
+  }
+}
+
+export const getAllOrders = (month : number) => async (dispatch : AppDispatch) : Promise<boolean> => {
+  try {
+    const res = await apiConnector("GET", OrderEndpoints.GET_ALL_ORDERS + `?month=${month}`);    
+    if (res.success && res.data) {
+      dispatch(setOrders(res.data as Orders[]));
+      return true;
+    } else {
+      toast.error(res.message || "Failed to fetch orders");
+      return false;
+    }
+  } catch (error) {
+    console.error("Get all orders error:", error);
+    toast.error("Unable to fetch orders");
+    return false;
+  }
+} 

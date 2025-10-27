@@ -25,6 +25,8 @@ export const CategoryEndpoints = {
 export const OrderEndpoints = {
     PLACE_CASH_ORDER: `${BASE_URL}/order/place/cash`,
     PLACE_ONLINE_ORDER: `${BASE_URL}/order/place/online`,
+    GET_PENDING_ORDERS: `${BASE_URL}/order/user/pending`,
+    GET_ALL_ORDERS: `${BASE_URL}/order/user/all`,
 }
 
 export const RazorpayEndpoints = {
