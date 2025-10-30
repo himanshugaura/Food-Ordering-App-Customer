@@ -120,11 +120,11 @@ const Cart = () => {
       playSound();
     };
 
-    socket.on("storeStatus", handleStoreStatus);
+    socket.on("statusUpdated", handleStoreStatus);
 
     return () => {
       disconnectSocket();
-      socket.off("storeStatus", handleStoreStatus);
+      socket.off("statusUpdated", handleStoreStatus);
     };
   }, [dispatch]);
   

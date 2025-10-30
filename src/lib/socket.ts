@@ -1,7 +1,7 @@
 import { io, Socket } from "socket.io-client";
 
 interface ServerToClientEvents {
-  storeStatus: (payload: { data: boolean; message: string }) => void;
+  statusUpdated: (payload: { data: boolean; message: string }) => void;
 }
 
 interface ClientToServerEvents {
