@@ -8,7 +8,7 @@ interface ClientToServerEvents {
   joinRoom: (room: string) => void;
 }
 
-const SOCKET_URL =  process.env.NEXT_PUBLIC_BASE_URL as string;
+const SOCKET_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
 
 export const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(SOCKET_URL, {
   autoConnect: false,
