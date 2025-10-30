@@ -79,7 +79,7 @@ const Cart = () => {
         const orderRes = await dispatch(createOnlineOrder(orderItems));
         if (!orderRes) {
           console.error("Payment initiation failed");
-          return;
+          return; 
         }
         openPaymentPopup(orderRes);
       }
@@ -104,7 +104,7 @@ const Cart = () => {
   useEffect(() => {
     connectSocket();
 
-    socket.emit("joinRoom", `store:orders`);
+    socket.emit("joinRoom", `storeStatus`);
 
     const playSound = () => {
       try {
