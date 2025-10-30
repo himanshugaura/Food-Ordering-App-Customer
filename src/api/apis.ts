@@ -9,6 +9,7 @@ export const AuthEndpoints = {
 
 export const StoreEndpoints = {
     GET_STORE: `${BASE_URL}/store/details`,
+    GET_STORE_STATUS: `${BASE_URL}/store/status`,
 }
 
 export const ProductEndpoints = {

@@ -1,21 +1,24 @@
 "use client";
-import { JSX, useEffect, useMemo, useState } from "react";
+import { JSX, useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/store/hook";
 import { RootState } from "@/store/store";
-import { getProductsByCart } from "@/api/cart";
+import { getProductsByCart, getStoreStatus } from "@/api/cart";
 import CartCard from "@/components/cart/CartCard";
-import { ShoppingBag, ArrowRight, Package, Banknote, CreditCard, Loader2 } from "lucide-react";
+import { ShoppingBag, ArrowRight, Package, Banknote, CreditCard, Loader2, Clock } from "lucide-react";
 import { SparklesText } from "@/components/ui/sparkles-text";
 import { PaymentMethod } from "@/constants/typeConstants";
 import { createCashOrder, createOnlineOrder, openPaymentPopup } from "@/api/order";
-import { CartItem, OrderItem } from "@/types/type";
+import { CartItem } from "@/types/type";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { connectSocket, disconnectSocket, socket } from "@/lib/socket";
+import { setStatus } from "@/store/features/store.slice";
 
 
 const Cart = () => {
   const cartItems = useSelector((state: RootState) => state.cart.CartItems);
+  const storeStatus = useSelector((state: RootState) => state.store.isOpen);
   const dispatch = useAppDispatch();
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(PaymentMethod.CASH);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -25,6 +28,7 @@ const Cart = () => {
     const fetchCartData = async () => {
       try {
         await dispatch(getProductsByCart());
+        await dispatch(getStoreStatus());
       } catch (error) {
         console.error("Error fetching cart data:", error);
       }
@@ -45,6 +49,11 @@ const Cart = () => {
   }));
 
   const handleProceedToBuy = async () => {
+    if (!storeStatus) {
+      toast.error("Store is currently closed. Please try again when the store is open.");
+      return;
+    }
+
     if (isSubmitting) return;
     if (!orderItems.length) {
       alert("Cart is empty!");
@@ -84,6 +93,41 @@ const Cart = () => {
       setIsSubmitting(false);
     }
   };
+
+   const notifyAudioRef = useRef<HTMLAudioElement | null>(null);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      notifyAudioRef.current = new Audio("/notification.mp3");
+    }
+  }, []);
+
+  useEffect(() => {
+    connectSocket();
+
+    socket.emit("joinRoom", `store:orders`);
+
+    const playSound = () => {
+      try {
+        notifyAudioRef.current?.play();
+      } catch (e) {
+        console.error("Error playing notification sound:", e);
+      }
+    };
+
+    const handleStoreStatus = (payload: {data : boolean , message : string}) => {
+      dispatch(setStatus(payload.data));
+      toast(payload.message);
+      playSound();
+    };
+
+    socket.on("storeStatus", handleStoreStatus);
+
+    return () => {
+      disconnectSocket();
+      socket.off("storeStatus", handleStoreStatus);
+    };
+  }, [dispatch]);
+  
 
   if (!cartItems || cartItems.length === 0) {
     return (
@@ -185,6 +229,30 @@ const Cart = () => {
               <div className="bg-zinc-900/50 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 shadow-xl shadow-black/20">
                 <h2 className="text-xl font-bold text-zinc-100 mb-6">Order Summary</h2>
 
+                {/* Store Status Indicator */}
+                <div className={[
+                  "mb-6 p-4 rounded-xl flex items-center gap-3 border",
+                  storeStatus 
+                    ? "bg-green-500/10 border-green-500/30" 
+                    : "bg-red-500/10 border-red-500/30"
+                ].join(" ")}>
+                  <Clock className={[
+                    "w-5 h-5",
+                    storeStatus ? "text-green-400" : "text-red-400"
+                  ].join(" ")} />
+                  <div className="flex-1">
+                    <p className={[
+                      "font-semibold text-sm",
+                      storeStatus ? "text-green-400" : "text-red-400"
+                    ].join(" ")}>
+                      {storeStatus ? "Store is Open" : "Store is Closed"}
+                    </p>
+                    <p className="text-xs text-zinc-500">
+                      {storeStatus ? "Ready to accept orders" : "Come back when we're open"}
+                    </p>
+                  </div>
+                </div>
+
                 <div className="space-y-4 mb-6">
                   <div className="flex items-center justify-between text-zinc-400">
                     <span>Items ({itemCount})</span>
@@ -222,18 +290,24 @@ const Cart = () => {
 
                 <button
                   onClick={handleProceedToBuy}
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !storeStatus}
                   aria-busy={isSubmitting}
                   className={[
                     "w-full text-white font-semibold py-3.5 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2",
-                    "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30",
-                    isSubmitting ? "opacity-70 cursor-not-allowed hover:from-blue-600 hover:to-blue-500" : "hover:scale-[1.02] active:scale-[0.98] cursor-pointer",
+                    (!storeStatus || isSubmitting)
+                      ? "bg-zinc-700 cursor-not-allowed opacity-70"
+                      : "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 hover:scale-[1.02] active:scale-[0.98] cursor-pointer",
                   ].join(" ")}
                 >
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
                       Processing...
+                    </>
+                  ) : !storeStatus ? (
+                    <>
+                      <Clock className="w-5 h-5" />
+                      Store Closed
                     </>
                   ) : (
                     <>
@@ -245,7 +319,9 @@ const Cart = () => {
 
                 {/* Small reassurance text */}
                 <p className="mt-3 text-xs text-zinc-500">
-                  Secure payments powered by Razorpay. Your order will appear in your profile once placed.
+                  {storeStatus 
+                    ? "Secure payments powered by Razorpay. Your order will appear in your profile once placed."
+                    : "Orders can only be placed when the store is open. Please check back later."}
                 </p>
               </div>
             </div>

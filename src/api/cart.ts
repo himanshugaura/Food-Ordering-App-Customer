@@ -1,8 +1,9 @@
-import { ProductEndpoints } from "./apis";
+import { ProductEndpoints, StoreEndpoints } from "./apis";
 import { apiConnector } from "@/utils/apiConnector";
 import { AppDispatch } from "@/store/store";
 import { setCart } from "@/store/features/cart.slice";
 import type { Product, OrderItem } from "@/types/type";
+import { setStatus } from "@/store/features/store.slice";
 
 export const fetchCart =
   () =>
@@ -56,3 +57,21 @@ export const getProductsByCart =
       return false;
     }
   };
+
+export const getStoreStatus =
+  () =>
+  async (dispatch : AppDispatch): Promise<boolean> => {
+    try {
+      const res = await apiConnector("GET", StoreEndpoints.GET_STORE_STATUS);
+      
+      if (res.success) {
+        dispatch(setStatus(res.data as boolean));
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Get store status error:", error);
+      return false;
+    }
+  };  

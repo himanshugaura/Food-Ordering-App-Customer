@@ -4,7 +4,6 @@ import { AuthEndpoints, StoreEndpoints } from "./apis";
 import { clearUser, setUser } from "@/store/features/auth.slice";
 import type { Store, User } from "@/types/type";
 import toast from "react-hot-toast";
-import { setStore } from "@/store/features/store.slice";
 
 export const register = ( name: string, username: string, password: string) => async (dispatch: AppDispatch) : Promise<boolean> => {
     try {
@@ -80,25 +79,6 @@ export const logout = () => async (dispatch: AppDispatch) : Promise<boolean> => 
     } catch (error) {
         console.error("Logout error:", error);
         toast.error("Unable to logout");
-        return false;
-    }
-}
-
-export const getStoreDetails = () => async (dispatch : AppDispatch) => {
-    try {
-        const res = await apiConnector('GET', StoreEndpoints.GET_STORE);        
-        
-        if (res.success && res.data) {
-            dispatch(setStore(res.data as Store));
-            return true;
-        }
-        else {
-            toast.error(res.message || "Failed to fetch store details");
-            return false;
-        }
-    } catch (error) {
-        console.error("Fetch store details error:", error);
-        toast.error("Unable to fetch store details");
         return false;
     }
 }
