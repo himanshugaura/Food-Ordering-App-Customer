@@ -1,4 +1,3 @@
-import type { Orders } from "@/types/type";
 import { io, Socket } from "socket.io-client";
 
 interface ServerToClientEvents {

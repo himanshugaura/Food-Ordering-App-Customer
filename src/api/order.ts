@@ -1,7 +1,7 @@
 import { apiConnector } from "@/utils/apiConnector";
 import toast from "react-hot-toast";
 import { OrderEndpoints, RazorpayEndpoints } from "./apis";
-import { CartItem, OnlineOrderResponse, OrderItem, Orders, PaymentResponse, RazorpayInstance, RazorpayOptions } from "@/types/type";
+import { CartItem, OnlineOrderResponse, Orders, PaymentResponse, RazorpayInstance, RazorpayOptions } from "@/types/type";
 import { AppDispatch } from "@/store/store";
 import { setOrders, setPendingOrders } from "@/store/features/orders.slice";
 // Cash order

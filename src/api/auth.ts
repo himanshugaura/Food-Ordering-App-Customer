@@ -1,8 +1,8 @@
 import type { AppDispatch } from "@/store/store";
 import { apiConnector } from "@/utils/apiConnector";
-import { AuthEndpoints, StoreEndpoints } from "./apis";
+import { AuthEndpoints } from "./apis";
 import { clearUser, setUser } from "@/store/features/auth.slice";
-import type { Store, User } from "@/types/type";
+import type { User } from "@/types/type";
 import toast from "react-hot-toast";
 
 export const register = ( name: string, username: string, password: string) => async (dispatch: AppDispatch) : Promise<boolean> => {
